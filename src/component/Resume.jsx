@@ -4,7 +4,7 @@ const Resume = () => {
 
     return (
         <div id='resume'>
-            <a id='download-button' href='https://drive.google.com/open?id=1f_g9EAhYNIjRwRv-WkPHW2ufjgylw250' target='__blank'>Download Resume as PDF</a>
+            <a id='download-pdf' className='button' href='https://drive.google.com/open?id=1f_g9EAhYNIjRwRv-WkPHW2ufjgylw250' target='__blank'>Download Resume as PDF</a>
             <div className='row'>
                 <section className='col-7'>
                     <title className="main-heading">Experience</title>   

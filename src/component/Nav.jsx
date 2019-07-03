@@ -6,6 +6,12 @@ const Nav = ({activeTab, onTabChange}) => {
   return (
     <ul className='nav justify-content-center'>
       <li className='nav-item'>
+        <button className={`nav-link btn btn-link h-100 ${activeTab === 'about' ? 'active' : ''}`} onClick={()=>onTabChange('about')}>
+          <i className='fas fa-folder-open fa-2x d-block'/>
+          About
+        </button>
+      </li>
+      <li className='nav-item'>
         <button className={`nav-link btn btn-link h-100 ${activeTab === 'profile' ? 'active' : ''}`} onClick={()=>onTabChange('profile')}>
           <i className='fas fa-user fa-2x d-block'/> 
           Profile
@@ -17,12 +23,7 @@ const Nav = ({activeTab, onTabChange}) => {
           Resume
         </button>
       </li>
-      <li className='nav-item'>
-        <button className={`nav-link btn btn-link h-100 ${activeTab === 'portfolio' ? 'active' : ''}`} onClick={()=>onTabChange('portfolio')}>
-          <i className='fas fa-folder-open fa-2x d-block'/>
-          Portfolio
-        </button>
-      </li>
+    
       <li className='nav-item'>
         <button className={`nav-link btn btn-link h-100 ${activeTab === 'contact' ? 'active' : ''}`} onClick={()=>onTabChange('contact')}>
           <i className='fas fa-envelope fa-2x d-block'/>

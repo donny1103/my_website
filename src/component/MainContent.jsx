@@ -2,11 +2,14 @@ import React from 'react';
 import Nav from './Nav';
 import Profile from './Profile';
 import Resume from './Resume';
+import About from './About';
+import Contact from './Contact';
+import SocialLinks from './SocialLinks';
 
 class MainContent extends React.Component{
 
   state = {
-    activeTab: 'profile'
+    activeTab: 'about'
   };
 
   handleSetActiveTab = activeTab => this.setState({activeTab});
@@ -20,16 +23,25 @@ class MainContent extends React.Component{
         case 'resume':
           renderContent = <Resume/>;
           break;
-
+        case 'about':
+            renderContent = <About/>;
+            break;
+        case 'contact':
+            renderContent = <Contact/>;
+            break;
+        default:
+            renderContent = null;
+            break;
     }
-    return (
+    return <>
+      <SocialLinks/>
       <div id='content'>
         <Nav activeTab={this.state.activeTab} onTabChange={this.handleSetActiveTab}/>
         <div id='content-body'>
           {renderContent}
         </div>
       </div>
-    )
+    </>
   }
 }
 
