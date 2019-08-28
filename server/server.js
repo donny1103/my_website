@@ -23,7 +23,7 @@ app.listen(port, host, () => console.log(`App listening on port ${port}!`));
 app.post("/sendEmail", async (req, res) => {
   const email = {
     from: req.body.email,
-    to: "donny1103@hotmail.com",
+    to: process.env.HOTMAIL,
     subject: `${req.body.name} send a message from My Webiste`,
     text: req.body.message
   };
