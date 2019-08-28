@@ -1,6 +1,6 @@
 import React from "react";
 
-const Nav = ({ activeTab, onTabChange }) => {
+export default function Nav({ activeTab, onTabChange }) {
   return (
     <ul className="nav justify-content-center">
       <li className="nav-item">
@@ -50,6 +50,4 @@ const Nav = ({ activeTab, onTabChange }) => {
       </li>
     </ul>
   );
-};
-
-export default Nav;
+}
