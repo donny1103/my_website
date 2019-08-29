@@ -166,7 +166,7 @@ function TextAreaField({ id, label, value, onChange, error }) {
 function CustomModel(props) {
   return (
     <Modal {...props}>
-      <Modal.Body closeButton>
+      <Modal.Body>
         <h5>Email Sent!</h5>
         <h6>
           Thank you so much for taking time to contact me. I'll get back to you
