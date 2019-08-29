@@ -1,28 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import classnames from "classnames";
+import { Modal } from "react-bootstrap";
 
 export default function Contact() {
   const name = useForm("");
   const email = useForm("");
   const message = useForm("");
+  const [errors, setErrors] = useState({});
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    if (Object.keys(errors).length !== 0) {
+      setErrors({});
+    }
+  }, [name.value, email.value, message.value]);
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    const params = {
-      name: name.value,
-      email: email.value,
-      message: message.value
-    };
+    let hasError = false;
+    let errors = {};
+    if (name.value.trim() === "") {
+      errors.name = "Please provide your name";
+      hasError = true;
+    }
 
-    axios
-      .post("http://localhost:8080/sendEmail", params)
-      .then(data => console.log(data))
-      .catch(e => console.log(e));
+    if (email.value.trim() === "") {
+      errors.email = "Please provide your email";
+      hasError = true;
+    }
+
+    if (message.value.trim() === "") {
+      errors.message = "Please put anything you want to say to me";
+      hasError = true;
+    }
+
+    if (hasError) {
+      setErrors(errors);
+    } else {
+      setShowModal(true);
+      // const params = {
+      //   name: name.value,
+      //   email: email.value,
+      //   message: message.value
+      // };
+
+      // axios
+      //   .post("http://localhost:8080/sendEmail", params)
+      //   .then(data => console.log(data))
+      //   .catch(e => console.log(e));
+    }
+  };
+
+  const handleModelHide = () => {
+    setShowModal(false);
+    name.setValue("");
+    email.setValue("");
+    message.setValue("");
   };
 
   return (
-    <form onSubmit={handleSubmit} id="contact">
+    <form onSubmit={handleSubmit} id="contact" noValidate>
       <iframe
         width="100%"
         height="300"
@@ -42,39 +81,30 @@ export default function Contact() {
         </div>
         <div className="col-7">
           <title>Let's keep in touch</title>
-          <div className="form-group">
-            <label htmlFor="email-name">Your Name</label>
-            <input
-              className="form-control"
-              type="text"
-              id="email-name"
-              name="firstname"
-              {...name}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email-address">Your Email</label>
-            <input
-              className="form-control"
-              type="email"
-              id="email-address"
-              {...email}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email-message">Your Message</label>
-            <textarea
-              className="form-control"
-              type="text"
-              id="email-message"
-              {...message}
-            />
-          </div>
+          <InputField
+            id="email-name"
+            label="Your Name"
+            {...name}
+            error={errors.name}
+          />
+          <InputField
+            id="email-address"
+            label="Your Email"
+            {...email}
+            error={errors.email}
+          />
+          <TextAreaField
+            id="email-message"
+            label="Your Message"
+            {...message}
+            error={errors.message}
+          />
           <button type="submit" className="button">
             Send Your Message
           </button>
         </div>
       </div>
+      <CustomModel show={showModal} onHide={handleModelHide} />
     </form>
   );
 }
@@ -82,5 +112,72 @@ export default function Contact() {
 function useForm(initialValue = "") {
   const [value, setValue] = useState(initialValue);
   const onChange = e => setValue(e.target.value);
-  return { value, onChange };
+  return { value, onChange, setValue };
+}
+
+function InputField({ id, label, value, onChange, error }) {
+  return (
+    <div className="form-group" style={{ position: "relative" }}>
+      <label htmlFor={id}>{label}</label>
+      <input
+        className={classnames({
+          "form-control": true,
+          "is-invalid": error
+        })}
+        type="text"
+        id={id}
+        value={value}
+        onChange={onChange}
+      />
+      <div
+        className="invalid-feedback mt-0"
+        style={{ position: "absolute", color: "#dcc7ad" }}
+      >
+        {error && <p className="mb-0">{error}</p>}
+      </div>
+    </div>
+  );
+}
+
+function TextAreaField({ id, label, value, onChange, error }) {
+  return (
+    <div className="form-group" style={{ position: "relative" }}>
+      <label htmlFor={id}>{label}</label>
+      <textarea
+        className={classnames({
+          "form-control": true,
+          "is-invalid": error
+        })}
+        type="text"
+        id="email-message"
+        value={value}
+        onChange={onChange}
+      />
+      <div
+        className="invalid-feedback mt-0"
+        style={{ position: "absolute", color: "#dcc7ad" }}
+      >
+        {error && <p className="mb-0">{error}</p>}
+      </div>
+    </div>
+  );
+}
+
+function CustomModel(props) {
+  return (
+    <Modal {...props}>
+      <Modal.Body closeButton>
+        <h5>Email Sent!</h5>
+        <h6>
+          Thank you so much for taking time to contact me. I'll get back to you
+          as soon as possible.
+        </h6>
+        <div className="text-right">
+          <button className="btn btn-secondary" onClick={props.onHide}>
+            close
+          </button>
+        </div>
+      </Modal.Body>
+    </Modal>
+  );
 }
