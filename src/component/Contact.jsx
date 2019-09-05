@@ -46,7 +46,10 @@ export default function Contact() {
       };
 
       axios
-        .post(`http://localhost:8080/sendEmail`, params)
+        .post(
+          `http://${process.env.API_HOST || "0.0.0.0"}:8080/sendEmail`,
+          params
+        )
         .then(data => {
           setShowModal(true);
         })
