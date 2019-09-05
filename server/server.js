@@ -6,7 +6,7 @@ const nodemailer = require("nodemailer");
 const app = express();
 const port = process.env.PORT || 8080;
 const host = "0.0.0.0";
-console.log(process.env.GOOGLE_USER_NAME);
+
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
@@ -23,7 +23,7 @@ app.listen(port, host, () => console.log(`App listening on port ${port}!`));
 app.post("/sendEmail", async (req, res) => {
   const email = {
     from: req.body.email,
-    to: process.env.HOTMAIL,
+    to: process.env.RECEIVIGN_MAIL,
     subject: `${req.body.name} send a message from My Webiste`,
     text: req.body.message
   };
@@ -31,10 +31,16 @@ app.post("/sendEmail", async (req, res) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.GOOGLE_EMAIL,
-      pass: process.env.GOOGLE_SECRET
+      user: process.env.SENDING_EMAIL,
+      pass: process.env.PASS
     }
   });
 
-  const info = await transporter.sendMail(email);
+  try {
+    await transporter.sendMail(email);
+    res.status(200).send("Email Sent");
+  } catch (e) {
+    console.log(e);
+    res.status(500).send("Internal Server Error");
+  }
 });

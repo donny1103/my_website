@@ -39,20 +39,21 @@ export default function Contact() {
     if (hasError) {
       setErrors(errors);
     } else {
-      setShowModal(true);
-      // const params = {
-      //   name: name.value,
-      //   email: email.value,
-      //   message: message.value
-      // };
+      const params = {
+        name: name.value,
+        email: email.value,
+        message: message.value
+      };
 
-      // axios
-      //   .post("http://localhost:8080/sendEmail", params)
-      //   .then(data => console.log(data))
-      //   .catch(e => console.log(e));
+      axios
+        .post(`http://localhost:8080/sendEmail`, params)
+        .then(data => {
+          setShowModal(true);
+        })
+        .catch(e => console.log(e));
     }
   };
-
+  // `http://${process.env.REACT_APP_API_HOST || "localhost:8080"}/sendEmail`
   const handleModelHide = () => {
     setShowModal(false);
     name.setValue("");
