@@ -11,7 +11,7 @@ const About = () => (
       <h5>Web Developer</h5>
       <p>
         I am a web developer who passionate in engineering and crafting
-        responsive, interactive web app. I have 1-year experience in web
+        responsive, interactive web app. I have 3-years experience in full stack
         application development with expertise in front end application
         development using modern JavaScript frameworks and libraries. My skills
         of web responsive design, database management and troubleshooting make
