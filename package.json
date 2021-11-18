@@ -8,7 +8,7 @@
     "classnames": "^2.2.6",
     "install": "^0.13.0",
     "node-sass": "^4.12.0",
-    "npm": "^6.11.2",
+    "npm": "^6.14.6",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.12",
     "react-dom": "^16.8.6",
